@@ -1,0 +1,128 @@
+<div class="sub-titulo">
+    <h6 class="titulo-sub">Mensagens</h6>
+  </div>
+  <div class="container-fluid conteudo">
+      <br>
+      <table class="table table-borderless fixo tabelatitulo">
+        <tr style="height: 0px">
+          <td width="600px" style="padding-left:0px">
+          </td>
+          <td width="44px">Filtrar</td>
+          <td width="120px">
+              <select style="width:130px;height:35px;bottom: 200px; font-size:13px;margin-bottom:-10px;margin-top:-8px" 
+              type="text" class="form-control" name="status" [(ngModel)]="status" required (change)="getMessage()">
+                  <option value="">Todas</option>
+                  <option value="0">Pendentes</option>
+                  <option value="1">Visualizadas</option>
+                </select> 
+          </td>
+          <td width="170px">
+                <div class="form-group" style="width:170px;height:30px;bottom: 200px; font-size:13px;margin-bottom:-10px;margin-top:-8px" >
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Buscar cadastro..."
+                    [(ngModel)]="search" (keyup)="getMessage()">
+                  </div>
+          </td>
+        </tr>
+      </table>
+      <table class="table table-bordered fixo" style="text-align: center;">
+          <thead class="titulo_tabela">
+            <tr style="background-color: #f8f9fa">
+              <td width="30px" style="width: 30px;border-right:0px;">
+              </td>
+              <th width="213px" style="text-align: left;border-left:0px">
+                Enviada por
+              </th>
+              <td width="30px" style="width: 30px;border-right:0px;">
+              </td>
+              <th width="153px" style="text-align: left;border-left:0px">
+                Título
+              </th>
+              <td width="30px" style="width: 30px;border-right:0px;">
+              </td>
+              <th width="350px" style="text-align: left;border-left:0px">
+                 Texto
+                 </th>
+              <th width="200px" style="text-align: left;border-left:0px">
+               Data e Hora
+              </th>
+              <th width="100px">
+                Operações
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let a of messages">
+                 <ng-container *ngIf="a.status=='1'">                
+                    <td class="colorLib" style="width: 30px;border-right:0px;">
+                    </td>
+                    <td class="colorLib" style="text-align: left;border-left:0px">
+                      <span>{{a.people.name}}</span>
+                    </td>
+                    <td class="colorLib" style="width: 30px;border-right:0px;">
+                    </td>
+                    <td class="colorLib" style="text-align: left;border-left:0px">
+                      <span>{{a.title}}</span>
+                    </td>
+                    <td class="colorLib" style="width: 30px;border-right:0px;">
+                    </td>
+                    <td class="colorLib" style="text-align: left;border-left:0px">
+                        <span>{{a.text}}</span>
+                    </td>
+                    <td class="colorLib" style="text-align: left;border-left:0px">
+                        <span>{{a.createdAt | date: 'dd/MM/yyyy HH:MM'}}</span>
+                    </td>
+                    <td style="border-right:0px;border-left:0px;" width="12px">
+                        <a placement="top" ngbTooltip="Marcado como lido">
+                          <img width="20px" src="../assets/visualizado.png">
+                        </a>
+                      </td>
+                 </ng-container>
+                 <ng-container *ngIf="a.status=='0'">
+                    <td class="colorPend" style="width: 30px;border-right:0px;">
+                      </td>
+                      <td class="colorPend" style="text-align: left;border-left:0px">
+                        <span>{{a.people.name}}</span>
+                      </td>
+                      <td class="colorPend" style="width: 30px;border-right:0px;">
+                      </td>
+                      <td class="colorPend" style="text-align: left;border-left:0px">
+                        <span>{{a.title}}</span>
+                      </td>
+                      <td class="colorPend" style="width: 30px;border-right:0px;">
+                      </td>
+                      <td class="colorPend" style="text-align: left;border-left:0px">
+                          <span>{{a.text}}</span>
+                      </td>
+                      <td class="colorPend" style="text-align: left;border-left:0px">
+                           <span>{{a.createdAt | date: 'dd/MM/yyyy HH:MM'}}</span>
+                      </td>
+                      <td style="border-right:0px;border-left:0px;" width="12px">
+                        <a placement="top" ngbTooltip="Marcar como lido" (click)="markSeen(a.id)">
+                          <img width="20px" src="../assets/lido.png">
+                        </a>
+                      </td>
+                </ng-container>
+              </tr>  
+          </tbody>
+        </table>
+    </div>
+    <!--Excluir Acessos-->
+    <ng-template #excluirModal let-modal>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirma a Exclusão?</h5>
+            <button type="button" class="close" (click)="modal.dismiss()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>A operação será irreversível, deseja continuar?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button"class="btn btn-lingt" (click)="modal.dismiss()">Cancelar</button>
+            <button (click)="deleteAccess(a)" type="button" class="btn btn-danger">Excluir</button>
+          </div>
+        </div>
+      </ng-template>
+
+

@@ -1,0 +1,197 @@
+<ion-header>
+    <ion-toolbar color="favorite">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/"></ion-back-button>
+          </ion-buttons>
+      <ion-title *ngIf="people.id">
+        Editando cadastro...
+      </ion-title>
+      <ion-title *ngIf="!people.id">
+          Cadastrando...
+        </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content padding color="light">
+  <ion-grid>
+    <ion-row>
+        <ion-segment [(ngModel)]="segment" color="favorite">
+            <ion-segment-button class="segmentFont" value="d">
+                Dados
+              </ion-segment-button>        
+            <ion-segment-button class="segmentFont" value="f">
+                Facial
+            </ion-segment-button>
+         </ion-segment>
+    </ion-row>
+    <ion-row *ngIf="segment == 'd'">
+      <ion-card class="colorcard">
+        <ion-card-content> 
+          <form padding [formGroup]="peopleForm" (submit)="save()" novalidate>
+            <ion-list>       
+            <ion-label *ngIf="roles!='RESIDENT'" class="centerLabel"><p><b>Identificação *</b></p></ion-label><br> 
+            <ion-row>
+                <ion-row *ngIf="roles!='RESIDENT'">
+                    <ion-item>
+                        <ion-label class="fontLabel" position="floating">Nome *</ion-label>
+                        <ion-input [(ngModel)]="people.name" formControlName="name"
+                        clearInput clearOnEdit="false" class="fontInput"></ion-input>
+                      </ion-item>
+                      <h6 *ngIf="errorName" class="error"> <ion-label *ngIf="!people.name">{{messageName}}</ion-label></h6>
+                </ion-row>
+                <ion-row *ngIf="roles!='RESIDENT'">
+                    <ion-item>
+                        <ion-label class="fontLabel" position="floating">E-mail *</ion-label>
+                        <ion-input type="email" [(ngModel)]="people.email" formControlName="email"
+                        clearInput clearOnEdit="false" class="fontInput"></ion-input>
+                      </ion-item>
+                      <h6 *ngIf="errorEmail" class="error"><ion-label>{{messageEmail}}</ion-label></h6>
+                </ion-row>
+                <ion-row *ngIf="roles!='RESIDENT'">
+                    <ion-item>
+                        <ion-label class="fontLabel" position="floating">Senha/App *</ion-label>
+                        <ion-input type="password" [(ngModel)]="people.passwordApp" formControlName="passwordApp"
+                        clearInput clearOnEdit="false" minlength="5" class="fontInput"></ion-input>        
+                    </ion-item>
+                    <h6 *ngIf="errorPasswordApp" class="error"> <ion-label>{{messagePasswordApp}}</ion-label></h6>
+                </ion-row>
+                <ion-row *ngIf="roles!='RESIDENT' || userEmail==people.email">
+                    <ion-item>
+                        <ion-label class="fontLabel" position="floating">Senha do portão *</ion-label>
+                        <ion-input type="text" [(ngModel)]="people.passwordHome" formControlName="passwordHome"
+                        clearInput clearOnEdit="false" minlength="5" class="fontInput"></ion-input>        
+                    </ion-item>
+                    <h6 *ngIf="errorPasswordHome" class="error"> <ion-label>{{messagePasswordHome}}</ion-label></h6>
+                </ion-row>
+              </ion-row>
+              <ion-label *ngIf="people.id!=1 && roles!='RESIDENT'" class="centerLabel"><p><b>Parâmetros *</b></p></ion-label><br>    
+              <ion-list *ngIf="roles!='RESIDENT'">                                       
+                    <ion-grid *ngIf="people.id!=1 && roles=='ADMIN'">  <!--   -->
+                      <ion-row>
+                              <ion-select name="rol" multiple="false" placeholder="Tipo de cadastro..." [(ngModel)]="role" formControlName="role">
+                              <ion-select-option value="ADMIN">Administrador</ion-select-option>
+                              <ion-select-option value="USER">Usuário Comum</ion-select-option>
+                              <ion-select-option value="RESIDENT">Inquilino</ion-select-option>
+                            </ion-select> 
+                      </ion-row>    
+                      <h6 *ngIf="errorRole" class="error itemName"> <ion-label>{{messageRole}}</ion-label></h6>
+                      <ion-row>
+                          <ion-select name="sit" multiple="false" placeholder="Situação..." [(ngModel)]="people.situation" formControlName="situation">
+                              <ion-select-option value="1">Ativo</ion-select-option>
+                              <ion-select-option value="0">Inativo</ion-select-option>
+                            </ion-select> 
+                      </ion-row>
+                      <h6 *ngIf="errorSituation" class="error itemName"> <ion-label>{{messageSituation}}</ion-label></h6>                                                                                                                         
+                    </ion-grid>  
+              </ion-list>
+              <ion-label *ngIf="roles!='RESIDENT'" class="centerLabel"><p><b>Endereço</b></p></ion-label><br>           
+            <ion-row *ngIf="roles!='RESIDENT'">
+                <ion-col>
+                    <ion-item>
+                        <ion-label class="fontLabel" position="floating">Cep:</ion-label>
+                        <ion-input type="text" [(ngModel)]="people.zipCode" (focusout)="getCep()"
+                        clearInput clearOnEdit="false" formControlName="zipCode" class="fontInput"></ion-input>
+                    </ion-item>                    
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label class="fontLabel" position="floating">Rua:</ion-label>
+                        <ion-input type="text" [(ngModel)]="people.street"
+                        clearInput clearOnEdit="false" formControlName="street" class="fontInput"></ion-input>
+                      </ion-item>
+                </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="roles!='RESIDENT'">
+                <ion-col>
+                   <ion-item>
+                      <ion-label class="fontLabel" position="floating">Nº:</ion-label>
+                      <ion-input type="text" [(ngModel)]="people.nStreet"
+                      clearInput clearOnEdit="false" formControlName="nStreet" class="fontInput"></ion-input>
+                   </ion-item>                    
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                      <ion-label class="fontLabel" position="floating">Bairro:</ion-label>
+                      <ion-input type="text" [(ngModel)]="people.hood"
+                      clearInput clearOnEdit="false" formControlName="hood" class="fontInput"></ion-input>
+                  </ion-item>                    
+                </ion-col>
+              </ion-row>
+
+              <ion-row *ngIf="roles!='RESIDENT'">
+                  <ion-col>
+                    <ion-item>
+                        <ion-label class="fontLabel" position="floating">Cidade:</ion-label>
+                        <ion-input type="text" [(ngModel)]="people.city"
+                        clearInput clearOnEdit="false" formControlName="city" class="fontInput"></ion-input>
+                    </ion-item>                      
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                        <ion-label class="fontLabel" position="floating">Uf:</ion-label>
+                        <ion-input type="text" [(ngModel)]="people.state"
+                        clearInput clearOnEdit="false" formControlName="state" class="fontInput"></ion-input>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              
+            <ion-row *ngIf="roles!='RESIDENT'">
+                <ion-col>
+                  <ion-item>
+                      <ion-label  class="fontLabel" position="floating">Complemento:</ion-label>
+                      <ion-input type="text" [(ngModel)]="people.complement"
+                      clearInput clearOnEdit="false" formControlName="complement" class="fontInput"></ion-input>
+                  </ion-item>                    
+                </ion-col>                
+            </ion-row> 
+          </ion-list> 
+            <ion-row *ngIf="roles=='RESIDENT'">____________________________</ion-row> 
+            <ion-buttons  slot="favorite">
+                <ion-button *ngIf="roles=='ADMIN' && roles!='RESIDENT' || roles!='RESIDENT' && role!='USER'" color="favorite" type="submit">
+                  <ion-icon slot="icon-only" name="save"></ion-icon>
+                </ion-button>
+                <ion-button *ngIf="roles=='ADMIN' && people.id && people.id!=1" color="danger" (click)="delete(people.id)">
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                </ion-button>
+                <ion-button *ngIf="people.id && people.email != userEmail" (click)="sendMsg()" color="dark">
+                  <ion-icon slot="icon-only" name="ios-chatboxes"></ion-icon>
+                </ion-button>
+                <ion-button *ngIf="people.id && people.email != userEmail" (click)="sendEmail()">
+                    <ion-icon slot="icon-only" name="mail"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              <ion-label *ngIf="people.id==1">Esse usuário é o administrador e não pode ser excluído, apenas alterado!</ion-label>
+       
+              <ion-row *ngIf="roles=='USER'" padding>
+                  <ion-label>Usuários só podem ser adicionados ou editados por Administradores!</ion-label>
+              </ion-row>
+          </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+      <ion-row *ngIf="segment == 'f'">
+          <ion-card class="colorcard">
+              <ion-card-content  *ngIf="people.faces == '0'"> 
+                    <ion-row padding>
+                             Não há Face cadastrada!
+                      </ion-row>
+                      <ion-row padding>
+                          <ion-button type="button" color="success" class="btnCenter" (click)="addFace()">Cadastrar Face</ion-button>
+                      </ion-row>
+              </ion-card-content>
+              <ion-card-content  *ngIf="people.faces == '1'"> 
+                    <ion-row padding>
+                             Já existe Face cadastrada!
+                      </ion-row>
+                      <ion-row padding>
+                          <ion-button type="button" color="success" class="btnCenter" (click)="addFace()">Recadastrar Face</ion-button>
+                      </ion-row>
+                      <ion-row padding>
+                          <ion-button type="button" color="danger" class="btnCenter" (click)="deleteFace()">Excluir Face</ion-button>
+                      </ion-row>
+              </ion-card-content>
+          </ion-card>
+      </ion-row>
+    </ion-grid>
+</ion-content>

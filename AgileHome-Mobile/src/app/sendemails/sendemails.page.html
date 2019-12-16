@@ -1,0 +1,29 @@
+<ion-list padding no-margin>
+    <ion-list-header color="favorite">
+      <ion-label class="fw700">Envio de email</ion-label>
+    </ion-list-header>
+    <form [formGroup]="sendForm" (ngSubmit)="sendEmail()" novalidate>
+        <ion-row>                     
+          <ion-item>
+              <ion-label position="floating">Título:</ion-label>
+              <ion-input type="text" [(ngModel)]="form.title" formControlName="title" required></ion-input>       
+         </ion-item>
+            <h6 *ngIf="errorTitulo" class="error"><ion-label *ngIf="!form.title">{{messageTitulo}}</ion-label></h6>
+        </ion-row>
+        <ion-row>                    
+            <ion-item>
+                <ion-textarea type="text" placeholder="Digite seu texto..." [(ngModel)]="form.text" formControlName="text" required></ion-textarea>       
+           </ion-item>
+              <h6 *ngIf="errorTexto" class="error"><ion-label *ngIf="!form.text">{{messageTexto}}</ion-label></h6>
+          </ion-row>
+          <ion-row padding>
+              <ion-button type="submit" color="favorite" class="btnCenter">Enviar</ion-button>
+        </ion-row>
+        <ion-row padding-top>    
+            <ion-label class="recipient">Para: {{form.name}}</ion-label>     
+        </ion-row>   
+        <ion-row padding-top>              
+            <ion-label class="recipient">E-mail: {{form.receptEmail}}</ion-label>       
+        </ion-row>
+    </form>
+</ion-list>

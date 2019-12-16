@@ -1,0 +1,125 @@
+<div class="sub-titulo">
+    <h6 class="titulo-sub">Acessos</h6>
+  </div>
+  <div *ngIf="roles=='RESIDENT'" class="container-fluid conteudo">
+    <div style="padding:50px; " class="card"><h5>Acesso Restrito...</h5></div>
+  </div>
+  <div *ngIf="roles!='RESIDENT'" class="container-fluid conteudo">
+      <br>
+      <table class="table table-borderless fixo tabelatitulo">
+        <tr style="height: 0px">
+          <td width="570px" style="padding-left:0px">
+          </td>
+          <td width="30px" style="padding-left:0px" (click)="exportPDF()">
+              <a><img style="background-color:#ffffff00;border: 0px;" width="30px" src="../assets/pdf.png"></a> 
+            </td>
+          <td width="50px" style="padding-top:17px;">Filtrar</td>
+          <td width="124px">
+              <select style="width:124px;height:35px;bottom: 200px; font-size:13px;margin-bottom:-10px;margin-top:-3px" 
+              type="text" class="form-control" name="status" [(ngModel)]="status" required (change)="getAccess()">
+                  <option value="">Todos</option>
+                  <option value="1">Liberado</option>
+                  <option value="0">Bloqueado</option>
+                </select> 
+          </td>
+          <td width="160px">
+                <div class="form-group" style="width:160px;height:30px;bottom: 200px; font-size:13px;margin-bottom:-10px;margin-top:-6px" >
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Buscar cadastro..."
+                    [(ngModel)]="search" (keyup)="getAccess()">
+                  </div>
+          </td>
+        </tr>
+      </table>
+      <table class="table table-bordered fixo" style="text-align: center;">
+          <thead class="titulo_tabela">
+            <tr style="background-color: #f8f9fa">
+              <td width="30px" style="width: 30px;border-right:0px;">
+              </td>
+              <th width="313px" style="text-align: left;border-left:0px">
+                Nome
+              </th>
+              <td width="30px" style="width: 30px;border-right:0px;">
+              </td>
+              <th width="303px" style="text-align: left;border-left:0px">
+                Data/Hora
+              </th>
+              <td width="30px" style="width: 30px;border-right:0px;">
+              </td>
+              <th width="300px" style="text-align: left;border-left:0px">
+                Acesso
+              </th>
+              <th *ngIf="roles=='ADMIN'" width="100px">
+                Excluir
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let a of accesses">
+                 <ng-container *ngIf="a.status=='1'">                
+                    <td class="colorLib" style="width: 30px;border-right:0px;">
+                    </td>
+                    <td class="colorLib" style="text-align: left;border-left:0px">
+                      <span>{{a.people.name}}</span>
+                    </td>
+                    <td class="colorLib" style="width: 30px;border-right:0px;">
+                    </td>
+                    <td class="colorLib" style="text-align: left;border-left:0px">
+                      <span>{{a.dateTime}}</span>
+                    </td>
+                    <td class="colorLib" style="width: 30px;border-right:0px;">
+                    </td>
+                    <td class="colorLib" style="text-align: left;border-left:0px">
+                      <span>Liberado</span>
+                    </td>
+                    <td *ngIf="roles=='ADMIN'" style="border-right:0px;border-left:0px;" width="12px"  (click)="access(a.id);open(excluirModal)">
+                      <a tiplacement="top" ngbTooltip="Apagar">
+                        <img width="20px" src="../assets/apagar.png">
+                      </a>
+                    </td>
+                 </ng-container>
+                 <ng-container *ngIf="a.status=='0'">
+                    <td class="colorBloq" style="width: 30px;border-right:0px;">
+                      </td>
+                      <td class="colorBloq" style="text-align: left;border-left:0px">
+                        <span>{{a.people.name}}</span>
+                      </td>
+                      <td class="colorBloq" style="width: 30px;border-right:0px;">
+                      </td>
+                      <td class="colorBloq" style="text-align: left;border-left:0px">
+                        <span>{{a.dateTime}}</span>
+                      </td>
+                      <td class="colorBloq" style="width: 30px;border-right:0px;">
+                      </td>
+                      <td class="colorBloq" style="text-align: left;border-left:0px">
+                        <span>Bloqueado</span>
+                      </td>
+                      <td *ngIf="roles=='ADMIN'" style="border-right:0px;border-left:0px;" width="12px">
+                        <a tiplacement="top" ngbTooltip="Apagar" (click)="access(a.id);open(excluirModal)">
+                          <img width="20px" src="../assets/apagar.png">
+                        </a>
+                      </td>
+                </ng-container>
+              </tr>  
+          </tbody>
+        </table>
+    </div>
+    <!--Excluir Acessos-->
+    <ng-template #excluirModal let-modal>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Confirma a Exclusão?</h5>
+            <button type="button" class="close" (click)="modal.dismiss()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>A operação será irreversível, deseja continuar?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button"class="btn btn-lingt" (click)="modal.dismiss()">Cancelar</button>
+            <button (click)="deleteAccess()" type="button" class="btn btn-danger">Excluir</button>
+          </div>
+        </div>
+      </ng-template>
+
+

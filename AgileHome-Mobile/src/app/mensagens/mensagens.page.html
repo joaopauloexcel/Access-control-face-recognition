@@ -1,0 +1,51 @@
+<ion-header>
+    <ion-toolbar color="favorite">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        <p>Mensagens</p>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content padding>
+      <ion-segment  multiple="false" [(ngModel)]="verific" color="favorite">
+          <ion-segment-button class="segmentFont" color="favorite" value="f">
+            PENDENTES
+          </ion-segment-button>
+          <ion-segment-button class="segmentFont" value="v">
+            VISUALIZADAS
+          </ion-segment-button>
+          <ion-segment-button class="segmentFont" value="">
+            OCULTAR
+          </ion-segment-button>
+       </ion-segment>
+      <ion-item>
+          <ion-input placeholder="Buscar mensagem..." type="text" [(ngModel)]="search" (keyup)="searchUser()"></ion-input>
+      </ion-item>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="favorite" routerLink="/list">
+          <ion-icon name="chatboxes"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <ion-list *ngIf="verific==='f'">
+      <ion-item *ngFor="let post of postsf" color="light" class="text-10" 
+      (click)="datasMessage(post.id, post.title, post.text, post.people.name, post.people.email);message()"> 
+        <ion-icon name="chatboxes" slot="start"></ion-icon>
+        {{post.title}}  {{post.createdAt | date: 'dd/MM/yyyy HH:MM'}}
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="verific==='v'">
+        <ion-item *ngFor="let post of postsv" color="light" class="text-10" 
+        (click)="datasMessage(post.id, post.title, post.text, post.people.name, post.people.email);message()"> 
+          <ion-icon name="chatboxes" slot="start"></ion-icon>
+          {{post.title}}  {{post.createdAt | date: 'dd/MM/yyyy HH:MM'}}
+        </ion-item>
+      </ion-list>
+    <!--
+      <div *ngIf="selectedItem" padding>
+        You navigated here from <b>{{selectedItem.title }}</b>
+      </div> {{cr.createdAt | date}}
+    -->
+  </ion-content>

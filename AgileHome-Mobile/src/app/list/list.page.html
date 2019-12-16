@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <p>Cadastros</p>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-segment [(ngModel)]="segment" color="favorite" (click)="getPeople()">
+        <ion-segment-button class="segmentFont" value="RESIDENT">
+            Inquilinos
+          </ion-segment-button>        
+        <ion-segment-button class="segmentFont" value="USER">
+          Usuários
+        </ion-segment-button>
+        <ion-segment-button *ngIf="roles=='ADMIN'" class="segmentFont" color="favorite" value="ADMIN">
+          Admin
+        </ion-segment-button>
+     </ion-segment>
+    <ion-item>
+        <ion-input placeholder="Buscar cadastro..." type="text" [(ngModel)]="search" (keyup)="searchUser()"></ion-input>
+    </ion-item>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button color="favorite" routerLink="/detail-usuario/{{segment}}">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+  </ion-fab>
+  <ion-list>
+    <ion-item *ngFor="let p of peoples" routerLink="/detail-usuario/{{p.id}}"> 
+      <ion-icon name="contact" slot="start"></ion-icon>
+      <ion-col class="fontEmail">{{p.name}} </ion-col>
+      <ion-col class="fontEmail"> {{p.email}}</ion-col>  
+      <ion-col *ngIf="p.faces == 0" class="fontEmail">S/Face</ion-col>
+      <ion-col *ngIf="p.faces == 1" class="fontEmail">C/Face</ion-col>           
+    </ion-item>
+  </ion-list>
+  <!--
+    <div *ngIf="selectedItem" padding>
+      You navigated here from <b>{{selectedItem.title }}</b>
+    </div> {{cr.createdAt | date}}
+  -->
+</ion-content>

@@ -1,0 +1,128 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { 
+    height: 100%; 
+}
+
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    background: #f8f9fa;
+}
+a {
+    cursor: hand;
+    cursor: pointer;
+    color: #fff !important;
+}
+.sub-titulo{
+  height:180px !important;
+  background:#ffffff;
+  text-align: center;
+  box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1), 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+.titulo-sub{
+	color:#2452b4;
+    padding-top:135px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size:20px;
+}.conteudoGrafico{
+    margin-top: -4px;
+    margin-left: 80px;
+    width: 200px;
+}
+.conteudoNews{
+    margin-left: 80px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    padding-bottom: 3px;
+}
+
+.conteudo{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 3px;
+    background: #fff;
+    box-shadow: 0.1px 0.1px 3px 0.1px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+    border-radius: 5px 5px 5px 5px;
+}
+.container-fluid {
+    width: 1140px;
+}
+.container-news {
+    width: 550px;
+    margin-left: 50px;
+}
+.tabelatitulo{
+    background-color: #3367d6;
+    color: #FFFFFF;
+    margin-bottom: 0px;
+    margin-top: -5px;
+    border-radius: 0px 0px 0px 0px;
+    height: 20px;
+    box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+}
+table.fixo { table-layout:fixed; }
+table.fixo td { overflow: hidden; }
+.titulo_tabela{
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size:15px;
+}
+.btn-add{
+    margin-bottom: -12px;
+    margin-top: -13px;
+    padding-top: 13px;
+    height: 48px;
+    width: 120px;
+    
+}
+.icone-add{
+    margin-bottom: 1px;
+    margin-right: 5px;
+    margin-left: 10px;
+}
+.btn-add:hover{
+    cursor: pointer;
+    background: #2452b4;
+}
+/*login e loginrec*/
+a {
+    cursor: hand;
+    cursor: pointer;
+}
+.centro{
+	margin-top: 22vh;
+    background: #FFFFFF;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+	padding: 25px 25px 10px 25px;
+	box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    border-radius: 0px 0px 5px 5px;
+}
+.login-sub{
+	background: #3367d6;
+	margin-top: -25px;
+	margin-left: -25px;
+	margin-right: -25px;
+	height: 4px;
+}
+.icone_login{
+    background: #fff;
+    height: 38px;
+}
+.login-sub{
+	background: #3367d6;
+	margin-top: -25px;
+	margin-left: -25px;
+	margin-right: -25px;
+	height: 4px;
+}
+.btn_submit{
+    background-color: #3367d6 !important;
+    color:#fff !important;
+    font-family: 'Open Sans','Open Sans Aux',Arial,Helvetica,Tahoma,sans-serif !important;
+    font-size: 18px !important;
+    letter-spacing: 1px !important;
+    min-height: 1.4em !important;
+    line-height: 1.4em !important;
+}

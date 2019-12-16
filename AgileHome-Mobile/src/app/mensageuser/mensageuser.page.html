@@ -1,0 +1,28 @@
+<ion-list padding no-margin>
+    <ion-list-header color="favorite">
+      <ion-label class="fw700">Mensagem</ion-label>
+    </ion-list-header>
+    <ion-list>
+        <ion-row>                    
+          <ion-item>
+              <ion-label><b padding>Assunto:</b>{{title}}</ion-label>     
+         </ion-item>
+        </ion-row>
+        <ion-row>                    
+            <ion-item>
+                <ion-textarea><b padding>Texto:</b>{{text}}</ion-textarea>       
+           </ion-item>
+        </ion-row>
+        <ion-row *ngIf="name">                    
+            <ion-row>
+                <ion-label><b class="bfont" padding>Enviado por: {{name}}</b></ion-label>       
+           </ion-row>
+           <ion-row>
+              <ion-label><b class="bfont" padding>Email: {{email}}</b></ion-label> 
+           </ion-row>
+        </ion-row>
+        <ion-row padding>
+              <ion-button (click)="markSeen()" color="favorite" class="btnCenter">Marcar como lido</ion-button>
+        </ion-row>
+      </ion-list>
+</ion-list>

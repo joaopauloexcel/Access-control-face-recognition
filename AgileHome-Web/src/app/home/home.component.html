@@ -1,0 +1,153 @@
+<div class="sub-titulo">
+  <h6 class="titulo-sub">Home</h6>
+</div>
+<div class="container">
+  <div class="row">
+      <div class="col-4 conteudo">
+        <br>
+        <table class="table table-borderless fixo tabelatitulo">
+          <tr style="height: 0px">
+            <td *ngIf="roles=='ADMIN' || roles=='USER' " width="100px" style="padding-left:0px">
+              <div  class="btn-add" (click)="clearNew();openLg(salvarModal)">
+                  <img class="icone-add" width="16px" src="../assets/add.png">Cadastrar
+              </div>
+            </td>
+            <td width="100px">Notícias</td>
+            <td width="30px">
+            </td>
+          </tr>
+        </table>
+    
+        <table class="table" style="padding:25px; padding-bottom: 10px">
+          <tr *ngFor="let new of news">
+            <td style="padding:20px; padding-bottom: 10px" width="500px">
+              <h5>{{new.text}}</h5>
+              <i>Criada em: {{new.dateTime}}</i><br>
+              <i>Por: {{new.people.name}}</i><br><br>
+            </td>
+            <td *ngIf="roles=='ADMIN'">
+              <div>
+                <a tiplacement="top"  ngbTooltip="Editar"  (click)="updateNew(new);openLg(salvarModal)">
+                  <img width="20px" src="../assets/editar.png">
+                </a>
+              </div>
+              <div style="padding-top: 10px">
+                <a tiplacement="top" ngbTooltip="Apagar"  (click)="updateNew(new);open(excluirModal)">
+                  <img width="20px" src="../assets/apagar.png">
+                </a>
+              </div>                    
+            </td>
+            </tr>
+          </table>
+        </div>
+        <div style="margin-left: 10px;margin-right: -10px;" *ngIf="roles=='ADMIN'" class="col-8 conteudo">
+            <br>
+            <table class="table" style="width: 730px !important;position: relative;">
+              <tr class="tabelatitulo" style="height: 0px">
+                <td width="370px" style="padding-left:0px">
+                </td>
+                <td width="260px">Gráficos</td>
+                <td width="230px">
+                </td>
+              </tr>
+              <tr>
+            </table>
+           <div  class="d-flex justify-content-center">
+            </div>
+              <table style="padding:20px; padding-bottom: 10px" class="justify-content-center">
+                  <tr style="margin-left: 20px">
+                      <div style="margin-left: 50px" class="row d-flex justify-content-center">
+                          <div *ngIf="accessesP || accessesN" style="width:650px; display: block;">
+                            <canvas baseChart
+                              [datasets]="barChartData"
+                              [labels]="barChartLabels"
+                              [options]="barChartOptions"
+                              [plugins]="barChartPlugins"
+                              [legend]="barChartLegend"
+                              [chartType]="barChartType">
+                            </canvas>
+                          </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="row d-flex justify-content-center">
+                          <div style="width:500px; display: block; margin-left: 150px">
+                            <div *ngIf="nResids0 || nResids1"  class="chart">
+                              <canvas baseChart
+                                [data]="pieChartData"
+                                [labels]="pieChartLabels"
+                                [chartType]="pieChartType"
+                                [options]="pieChartOptions"
+                                [plugins]="pieChartPlugins"
+                                [colors]="pieChartColors"
+                                [legend]="pieChartLegend">
+                              </canvas>
+                            </div>
+                          </div>
+                        </div>
+                  </tr>
+            </table>
+          </div> 
+          <div *ngIf="roles!='ADMIN'"  class="col-8 conteudo" style="margin-left: 10px;margin-right: -10px;">
+              <br>
+              <table class="table " style="width: 730px !important;position: relative;">
+                <tr class="tabelatitulo" style="height: 0px">
+                  <td width="370px" style="padding-left:0px">
+                  </td>
+                  <td width="260px"><b>Dashboard</b></td>
+                  <td width="230px">
+                  </td>
+                </tr>
+                <tr>
+              </table>  
+             <div style="text-align: center;">
+                <br>
+                <img width="500px" src="../assets/logo.png"> 
+             </div>
+          </div>
+  </div>    
+</div>
+ 
+  <!-- Modal Alterar/Cadastrar -->
+  <ng-template #salvarModal let-modal>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Notícia</h5>
+        <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="name">Texto:</label>
+            <textarea  type="text" class="form-control" name="text" required [(ngModel)]="new.text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-lingt" (click)="modal.dismiss()">Fechar</button>
+        <button (click)="saveNew()" type="button" class="btn btn-success">Salvar</button>
+      </div>
+    </div>
+  </ng-template>
+  
+  
+  <!-- Modal Excluir -->
+  <ng-template #excluirModal let-modal>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirma a Exclusão?</h5>
+        <button type="button" class="close" (click)="modal.dismiss()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>A operação será irreversível, deseja continuar?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button"class="btn btn-lingt" (click)="modal.dismiss()">Cancelar</button>
+        <button (click)="deleteNews()" type="button" class="btn btn-danger">Excluir</button>
+      </div>
+    </div>
+  </ng-template>

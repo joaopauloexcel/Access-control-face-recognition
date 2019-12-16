@@ -1,0 +1,340 @@
+<div class="sub-titulo">
+  <h6 class="titulo-sub">Cadastros</h6>
+</div>
+<div class="container-fluid conteudo">
+  <br>
+  <table class="table table-borderless fixo tabelatitulo">
+    <tr style="height: 0px">
+      <td width="600px" style="padding-left:0px">
+        <div *ngIf="roles=='ADMIN' || roles=='USER'" class="btn-add" (click)="newPeople();openLg(salvarModal)">
+            <img class="icone-add" width="16px" src="../assets/add.png" >Cadastrar
+        </div>
+      </td>
+      <td width="44px">Filtrar</td>
+      <td width="120px">
+          <select style="width:130px;height:35px;bottom: 200px; font-size:13px;margin-bottom:-10px;margin-top:-8px" 
+          type="text" class="form-control" name="role" [(ngModel)]="role" required (change)="searchRoles()">
+              <option  *ngIf="roles=='ADMIN'" value="">Todos</option>
+              <option  *ngIf="roles=='ADMIN'" value="ADMIN">Administrador</option>
+              <option  value="USER">Usuário</option>
+              <option  value="RESIDENT">Inquilino</option>
+            </select> 
+      </td>
+      <td width="170px">
+            <div class="form-group" style="width:170px;height:30px;bottom: 200px; font-size:13px;margin-bottom:-10px;margin-top:-8px" >
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Buscar cadastro..."
+                [(ngModel)]="search" (keyup)="searchUser()">
+              </div>
+      </td>
+    </tr>
+  </table>
+  <table class="table table-bordered fixo" style="text-align: center;">
+    <thead class="titulo_tabela">
+      <tr style="background-color: #f8f9fa">
+        <td width="30px" style="width: 30px;border-right:0px;">
+        </td>
+        <th width="347px" style="text-align: left;border-left:0px">
+          Nome
+        </th>
+        <td width="30px" style="width: 30px;border-right:0px;">
+        </td>
+        <th width="353px" style="text-align: left;border-left:0px">
+          E-mail
+        </th>
+        <th width="101px" style="text-align: left;border-left:0px">
+          Facial
+        </th>
+        <th width="239px" colspan="6">
+          Operações
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of pessoas">
+        <td style="width: 30px;border-right:0px;">
+        </td>
+        <td style="text-align: left;border-left:0px">
+          <span>{{p.name}}</span>
+        </td>
+        <td style="width: 30px;border-right:0px;">
+        </td>
+        <td style="text-align: left;border-left:0px">
+          <span>{{p.email}}</span>
+        </td>
+        <td style="text-align: left;border-left:0px">
+          <span *ngIf="p.faces==0">Sem Face</span>
+          <span *ngIf="p.faces==1">Com Face</span>
+        </td>
+        <td *ngIf="roles=='ADMIN'" style="border-right:0px;border-left:0px;" width="12px"
+        (click)="updatePeople(p);open(facial)">
+          <a placement="top" ngbTooltip="Detecção de Faces">
+            <img width="20px" src="../assets/facial.png">
+          </a>
+        </td>
+        <td *ngIf="roles!='ADMIN'" style="border-right:0px;border-left:0px;" width="12px">
+          <a placement="top" ngbTooltip="Acesso restrito!">
+            <img width="20px" src="../assets/not-facial.png">
+          </a>
+        </td>
+        <td *ngIf="p.email!=userEmail" style="border-right:0px;border-left:0px;" width="12px" (click)="email(p.name, p.email);open(enviaEmail)">
+          <a placement="top" ngbTooltip="E-mail">
+            <img width="20px" src="../assets/add-mail.png">
+          </a>
+        </td>
+        <td *ngIf="p.email==userEmail" style="border-right:0px;border-left:0px;" width="12px">
+          <a placement="top" ngbTooltip="Impossível Enviar!">
+            <img width="20px" src="../assets/not-mail.png">
+          </a>
+        </td>
+        <td *ngIf="p.email!=userEmail" style="border-right:0px;border-left:0px;" width="12px" (click)="message(p.id, p.name);open(enviaMensagem)">
+            <a placement="top" ngbTooltip="Mensagem">
+              <img width="20px" src="../assets/chat.png">
+            </a>
+          </td>
+          <td *ngIf="p.email==userEmail" style="border-right:0px;border-left:0px;" width="12px">
+            <a placement="top" ngbTooltip="Impossível Enviar!">
+              <img width="20px" src="../assets/not-chat.png">
+            </a>
+          </td>
+          <td *ngIf="roles=='ADMIN' || roles=='USER' || userEmail==p.email" style="border-right:0px;border-left:0px;" width="12px">
+              <a placement="top" ngbTooltip="Visualizar senha" (click)="updatePeople(p);openLg(senhaCasa)">
+                <img width="20px" src="../assets/see.png">
+              </a>
+            </td>
+            <td *ngIf="roles=='RESIDENT' && userEmail!=p.email" style="border-right:0px;border-left:0px;" width="12px">
+              <a placement="top" ngbTooltip="Acesso Restrito!" (click)="updatePeople(p);openLg(senhaCasa)">
+                <img width="20px" src="../assets/not-see.png">
+              </a>
+            </td>
+        <td *ngIf="roles=='ADMIN'" style="border-right:0px;border-left:0px;" width="12px">
+          <a  placement="top" ngbTooltip="Editar" (click)="updatePeople(p);openLg(salvarModal)">
+            <img width="20px" src="../assets/editar.png">
+          </a>
+        </td>
+        <td *ngIf="roles!='ADMIN'" style="border-right:0px;border-left:0px;" width="12px">
+          <a placement="top" ngbTooltip="Acesso Restrito!">
+            <img width="20px" src="../assets/not-editar.png">
+          </a>
+        </td>
+        <td *ngIf="p.id!=1" style="border-right:0px;border-left:0px;" width="12px">
+          <a  *ngIf="roles=='ADMIN'" tiplacement="top" ngbTooltip="Apagar" (click)="updatePeople(p);open(excluirModal)">
+            <img width="20px" src="../assets/apagar.png">
+          </a>
+        </td>
+        <td *ngIf="p.id==1 || roles!='ADMIN'" style="border-right:0px;border-left:0px;" width="12px">
+          <a *ngIf="roles=='ADMIN'" tiplacement="top" ngbTooltip="Impossível Excluir!">
+            <img width="20px" src="../assets/Napagar.png">
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal Alterar/Cadastrar -->
+<ng-template #salvarModal let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">{{modalTitle}} pessoa</h5>
+      <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div  *ngIf="roles=='ADMIN' || roles=='USER'" class="form-group">
+          <label for="name">Nome:</label>
+          <input  type="text" class="form-control" name="name" required [(ngModel)]="pessoa.name"/>
+        </div>
+        <div *ngIf="roles=='ADMIN' || roles=='USER'" class="form-group">
+          <label for="email">Email:</label>
+          <input type="text" class="form-control" name="email" required [(ngModel)]="pessoa.email"/>
+        </div>
+        <div *ngIf="roles=='ADMIN' || roles=='USER'" class="form-group">
+          <label for="passwordApp">Senha do App:</label>
+          <input type="password" class="form-control" name="passwordApp" required [(ngModel)]="pessoa.passwordApp"/>
+        </div>
+        <div class="form-group">
+          <label for="passwordHome">Senha do Portão:</label>
+          <input type="text" class="form-control" name="passwordHome" required [(ngModel)]="pessoa.passwordHome"/>
+        </div>
+        <div *ngIf="roles=='ADMIN' || roles=='USER'" class="form-group">
+          <label for="role">Tipo de Cadastro:</label>
+          <select type="text" class="form-control" name="role" required [(ngModel)]="role">
+            <option>Selecione...</option>
+            <option *ngIf="roles=='ADMIN'" value="ADMIN">Administrador</option>
+            <option value="USER">Usuário</option>
+            <option value="RESIDENT">Inquilino</option>
+          </select> 
+        </div>
+        <div *ngIf="roles=='ADMIN' || roles=='USER'" class="form-group">
+          <label for="situation">Situação:</label>
+          <select type="text" class="form-control" name="situation" required [(ngModel)]="pessoa.situation">
+            <option>Selecione...</option>
+            <option value="1">Ativo</option>
+            <option value="0">Inativo</option>
+          </select> 
+        </div>
+
+        <div *ngIf="roles=='ADMIN' || roles=='USER'" class="row form-group">
+          <div class="col-4">
+            <label for="zipCode">CEP:</label>
+            <input (keyup)="buscarCep()" maxlength="8" type="text" class="form-control" name="zipCode" required [(ngModel)]="pessoa.zipCode"/>
+          </div>
+          <div class="col-6">
+            <label for="street">Endereço:</label>
+            <input type="text" class="form-control"  name="street" [(ngModel)]="pessoa.street"/>
+          </div>
+          <div class="col-2">
+            <label for="nStreet">Número:</label>
+            <input type="text" class="form-control" name="nStreet" required [(ngModel)]="pessoa.nStreet"/>
+          </div>
+        </div> 
+        <div *ngIf="roles=='ADMIN' || roles=='USER'" class="row form-group">
+          <div class="col">
+            <label for="complement">Complemento:</label>
+            <input type="text" class="form-control" name="complement" required [(ngModel)]="pessoa.complement"/>
+          </div>
+          <div *ngIf="roles=='ADMIN' || roles=='USER'" class="col">
+            <label for="hood">Bairro:</label>
+            <input type="text" class="form-control" name="hood" required [(ngModel)]="pessoa.hood"/>
+          </div>
+        </div>
+        <div *ngIf="roles=='ADMIN' || roles=='USER'" class="row form-group">
+          <div class="col-7">
+            <label for="city">Cidade:</label>
+            <input type="text" class="form-control" name="city" required [(ngModel)]="pessoa.city"/>
+          </div>
+          <div class="col-5">
+            <label for="state">Estado:</label>
+            <input type="text" class="form-control" name="state" required [(ngModel)]="pessoa.state"/>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-lingt" (click)="modal.dismiss()">Fechar</button>
+      <button *ngIf="roles=='ADMIN' || roles=='USER'" (click)="save()" type="button" class="btn btn-success">Salvar</button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Modal Facial -->
+<ng-template #facial let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Detecção Facial</h5>
+      <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <span style="padding:10px">Ações:</span>
+      <button *ngIf="pessoa.faces==0" style="margin-left:40px; padding:10px" type="button" class="btn btn-success" (click)="addFace(pessoa.name)">Capturar Face</button>
+      <button *ngIf="pessoa.faces==1" style="margin-left:40px; padding:10px" type="button" class="btn btn-success" (click)="addFace(pessoa.name)">Recadastrar Face</button> 
+      &nbsp; <button *ngIf="pessoa.faces==1" style="padding:10px" type="button" class="btn btn-danger" (click)="deleteFace()">Excluir Face</button>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-lingt" (click)="selectPeople();modal.dismiss()">Fechar</button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Modal Alterar/Cadastrar -->
+<ng-template #senhaCasa let-modal>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Visualizar senha de acesso a casa</h5>
+        <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="passwordHome">Senha do portão:</label>
+            <input type="text" class="form-control" name="passwordHome" readonly="true" required [(ngModel)]="pessoa.passwordHome"/>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-lingt" (click)="modal.dismiss()">Fechar</button>
+      </div>
+    </div>
+  </ng-template>
+
+
+<!-- Modal Excluir-->
+<ng-template #excluirModal let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Confirma a Exclusão?</h5>
+      <button type="button" class="close" (click)="modal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>A operação será irreversível, deseja continuar?</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button"class="btn btn-lingt" (click)="modal.dismiss()">Cancelar</button>
+      <button *ngIf="roles=='ADMIN'" (click)="deletePeople()" type="button" class="btn btn-danger">Excluir</button>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Modal Envio de mensagem -->
+<ng-template #enviaMensagem let-modal>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Envio de mensagem para {{nameMessage}}</h5>
+        <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="title">Título:</label>
+            <input  type="text" class="form-control" name="title" required [(ngModel)]="post.title"/>
+          </div>
+          <div class="form-group">
+            <label for="text">Texto:</label>
+            <textarea type="text" class="form-control" name="text" required [(ngModel)]="post.text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-lingt" (click)="modal.dismiss()">Fechar</button>
+        <button (click)="sendMsg();modal.dismiss()" type="button" class="btn btn-success">Salvar</button>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Modal Envio de mensagem -->
+<ng-template #enviaEmail let-modal>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Envio de E-mail para {{nameMessage}}</h5>
+        <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="title">Título:</label>
+            <input  type="text" class="form-control" name="title" required [(ngModel)]="post.title"/>
+          </div>
+          <div class="form-group">
+            <label for="text">Texto:</label>
+            <textarea type="text" class="form-control" name="text" required [(ngModel)]="post.text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-lingt" (click)="modal.dismiss()">Fechar</button>
+        <button (click)="sendEmail();modal.dismiss()" type="button" class="btn btn-success">Salvar</button>
+      </div>
+    </div>
+  </ng-template>

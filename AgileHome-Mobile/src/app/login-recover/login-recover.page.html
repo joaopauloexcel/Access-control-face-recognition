@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-toolbar color="favorite">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/"></ion-back-button>
+          </ion-buttons>
+      <ion-title>
+        Recuperando login...
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content padding color="medium">
+      <ion-card class="welcome-card cardAll">
+          <ion-grid>
+          <ion-card-content> 
+            <form [formGroup]="loginRecover" (ngSubmit)="recoverNow()" novalidate>
+              <ion-row>                    
+                <ion-item>
+                    <ion-label position="floating">Insira o e-mail da conta:</ion-label>
+                    <ion-input type="email" [(ngModel)]="userEmail.email" formControlName="email" required></ion-input>        
+                  </ion-item>
+                  <h6 *ngIf="errorEmail" class="error"><ion-label>{{messageEmail}}</ion-label></h6>
+              </ion-row>
+              <ion-row padding>
+                    <ion-button type="submit" color="favorite" class="btnCenter">Recuperar</ion-button>
+              </ion-row>   
+            </form>
+            <ion-card-subtitle padding-top># Insira o e-mail do usuário já cadastrado!</ion-card-subtitle>
+            <ion-card-subtitle padding-top># Acesso somente a pessoas autorizadas!</ion-card-subtitle>
+            <ion-card-subtitle padding-top># A sua senha será redefinida!</ion-card-subtitle>
+          </ion-card-content>
+        </ion-grid> 
+      </ion-card>
+</ion-content>

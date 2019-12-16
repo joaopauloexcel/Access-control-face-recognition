@@ -1,0 +1,140 @@
+<div class="sub-titulo">
+    <h6 class="titulo-sub">Treinamento</h6>
+  </div>
+  <div class="container-fluid conteudo">
+    <br>
+    <table style="text-align: center;" class="table table-borderless fixo tabelatitulo">
+      <tr>
+        <td>Assista os Vídeos</td>
+      </tr>
+    </table>
+    <table class="table table-bordered fixo">
+        <thead class="titulo_tabela">
+          <tr style="background-color: #f8f9fa">
+            <td width="30px" style="border-right:0px;">
+            </td>
+            <th width="200px" style="text-align: left;border-left:0px">
+              Título
+            </th>
+            <td width="30px" style="border-right:0px;">
+            </td>
+            <th width="400px" style="text-align: left;border-left:0px">
+              Descrição
+            </th>
+            <th width="60px" style="text-align: left;border-left:0px">
+              Visualizar
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="width: 30px;border-right:0px;">
+            </td>
+            <td style="width: 30px;border-left:0px;">
+              Apresentação
+            </td>
+            <td style="width: 30px;border-right:0px;">
+            </td>
+            <td style="width: 30px;border-left:0px;">
+              Nesse vídeo apresentamos o Agile Home 
+            </td>
+            <td style="text-align: center;">
+              <a placement="top" ngbTooltip="Assistir" (click)="openLg(videoModal,'https://www.youtube.com/embed/2nty-m87dUA','Apresentação')">'
+                <img width="20px" src="../assets/see.png">
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 30px;border-right:0px;">
+            </td>
+            <td style="width: 30px;border-left:0px;">
+              Dashboard
+            </td>
+            <td style="width: 30px;border-right:0px;">
+            </td>
+            <td style="width: 30px;border-left:0px;">
+              Nesse vídeo apresentamos o Dashboard
+            </td>
+            <td style="text-align: center;">
+              <a placement="top" ngbTooltip="Assistir" (click)="openLg(videoModal,'https://www.youtube.com/embed/-juJ58Kp8d0','Dashboard')">'
+                <img width="20px" src="../assets/see.png">
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 30px;border-right:0px;">
+            </td>
+            <td style="width: 30px;border-left:0px;">
+              Módulo - Cadastros
+            </td>
+            <td style="width: 30px;border-right:0px;">
+            </td>
+            <td style="width: 30px;border-left:0px;">
+              Nesse vídeo apresentamos o módulo de Cadastros
+            </td>
+            <td style="text-align: center;">
+              <a placement="top" ngbTooltip="Assistir" (click)="openLg(videoModal,'https://www.youtube.com/embed/6PCq9t55QpQ','Módulo - Cadastros')">'
+                <img width="20px" src="../assets/see.png">
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 30px;border-right:0px;">
+            </td>
+            <td style="width: 30px;border-left:0px;">
+              Módulo - Acessos
+            </td>
+            <td style="width: 30px;border-right:0px;">
+            </td>
+            <td style="width: 30px;border-left:0px;">
+              Nesse vídeo apresentamos o módulo de Acessos
+            </td>
+            <td style="text-align: center;">
+              <a placement="top" ngbTooltip="Assistir" (click)="openLg(videoModal,'https://www.youtube.com/embed/cym-aHuyKew','Módulo - Acessos')">'
+                <img width="20px" src="../assets/see.png">
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td style="width: 30px;border-right:0px;">
+            </td>
+            <td style="width: 30px;border-left:0px;">
+              Módulo - Mensagens
+            </td>
+            <td style="width: 30px;border-right:0px;">
+            </td>
+            <td style="width: 30px;border-left:0px;">
+              Nesse vídeo apresentamos o módulo de Mensagens
+            </td>
+            <td style="text-align: center;">
+              <a placement="top" ngbTooltip="Assistir" (click)="openLg(videoModal,'https://www.youtube.com/embed/91lmi1byhog','Módulo - Mensagens')">'
+                <img width="20px" src="../assets/see.png">
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+
+    <!-- Modal Vídeo -->
+    <ng-template #videoModal let-modal>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{titulo}}</h5>
+            <button type="button" class="close" (click)="modal.dismiss()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <object width="770" height="480">
+              <param name="movie" [value]="url" />
+              <embed [src]="url" type="application/x-shockwave-flash" width="425" height="350" />
+              </object>
+          </div>
+          <div class="modal-footer">
+            <button type="button"class="btn btn-lingt" (click)="modal.dismiss()">Fechar</button>
+          </div>
+        </div>
+      </ng-template>
+
+

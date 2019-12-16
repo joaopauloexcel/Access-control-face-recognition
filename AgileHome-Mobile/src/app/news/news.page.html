@@ -1,0 +1,15 @@
+<ion-list padding no-margin>
+  <ion-list-header color="favorite">
+    <ion-label class="fw700">Notícias</ion-label>
+  </ion-list-header>
+  <ion-list>
+      <ion-row>                    
+          <ion-item>
+              <ion-textarea [(ngModel)]="form.text"><b padding>Texto:</b></ion-textarea>       
+         </ion-item>
+      </ion-row>
+      <ion-row padding>
+            <ion-button (click)="saveNew()" color="favorite" class="btnCenter">Salvar</ion-button>
+      </ion-row>
+    </ion-list>
+</ion-list>

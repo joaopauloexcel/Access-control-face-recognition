@@ -1,0 +1,67 @@
+<div *ngIf="authService.login" style="z-index:2; position:fixed">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <nav class="navbar menu" style="background-color: #3367d6">
+    <div class="col-4">
+      <img src="../assets/logo_branca.png">
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="menu-pricipal">
+          <a class="nav-link" routerLink="/home">
+            <img src="../assets/menu_home.fw.png" width="30px">
+          </a>
+        </div>
+        <div class="menu-pricipal">
+          <a class="nav-link" routerLink="/pessoas">
+            <img src="../assets/menu_cadastros.fw.png">
+          </a>
+        </div>
+        <div class="menu-pricipal">
+          <a class="nav-link" routerLink="/acessos">
+              <img src="../assets/menu_acessos.fw.png">
+          </a>
+        </div>
+        <div class="menu-pricipal">
+          <a class="nav-link" routerLink="/mensagens">
+              <img src="../assets/menu_mensagens.fw.png">
+          </a>
+        </div>
+        <div class="menu-pricipal">
+          <a class="nav-link" routerLink="/treinamento">
+              <img src="../assets/menu_treinamento.fw.png">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-1">
+    </div>
+    <div class="col-1 perfilFormat">
+     <div class="dropdown">
+       <div class="menu-perfil">
+          <a data-toggle="dropdown">
+            <img class="perfilFormat" src="../assets/perfil.png" (click)="useEmail()">
+          </a> 
+          <table  class="dropdown-menu">
+            <div style="color: black;margin-top: 10px;margin-left: 20px"><b>Login:</b>&nbsp; {{userEmail}}</div>
+            <a class="hoverMouse btn btn-block" (click)="logout()">
+              <img src="../assets/logout.fw.png">
+            </a>
+          </table>  
+       </div>        
+      </div>
+    </div>
+  </nav>
+</div>
+<main class="justify-content-center">
+    <div style="height: 100.08vh;">
+    <router-outlet></router-outlet>
+    </div>
+</main>
+
+
+  <!--
+  <div id="rodape">
+    <label>Copyright&#174;</label>
+  </div>-->
+  
+

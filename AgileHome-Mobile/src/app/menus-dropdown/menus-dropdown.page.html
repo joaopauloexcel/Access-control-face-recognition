@@ -1,0 +1,16 @@
+<ion-list no-padding no-margin>
+    <ion-list-header color="favorite">
+          <ion-label class="fw700">Novas mensagens</ion-label>       
+    </ion-list-header>
+
+    <ion-item *ngIf="nPosts==0" color="light" class="text-10" padding>
+      <ion-label> Não há novas notificações de momento! </ion-label>
+    </ion-item>
+
+    <ion-item *ngFor="let post of posts" color="light" class="text-10" 
+    (click)="datasMessage(post.id, post.title, post.text, post.people.email); message()">
+      <ion-icon name="chatboxes" color="favorite"></ion-icon>
+      <ion-label padding>{{post.title}} {{post.createdAt | date: 'dd/MM/yyyy HH:MM'}}</ion-label>
+    </ion-item>
+
+</ion-list>

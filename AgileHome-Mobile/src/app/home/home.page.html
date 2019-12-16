@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar color="favorite">
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+    <ion-grid>
+      <ion-row>
+        <ion-col>          
+        </ion-col>
+        <ion-col>
+          <ion-title>
+              Agile Home
+          </ion-title>
+        </ion-col>
+        <ion-col>          
+          </ion-col>
+      <ion-col>
+          <ion-button size="small" shape="round" color="medium" (click)="notifications()">
+              <ion-icon name="notifications"></ion-icon>
+              <ion-badge *ngIf="nPosts>0" color="danger" slot="end">{{nPosts}}</ion-badge>
+          </ion-button>
+      </ion-col>
+    </ion-row>
+   </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding color="light">
+    <ion-card class="welcome-card">
+      <img src="/assets/logo.png" alt="" />
+    </ion-card>
+
+    <ion-card *ngIf="rolesAuth=='ADMIN'">
+      <ion-card-header>
+       DASHBOARD - Gráficos
+      </ion-card-header>
+
+       <ion-segment [(ngModel)]="segment" (click)="buttonGrafh()" color="favorite">
+          <ion-segment-button class="segmentFont" color="favorite" value="bar" (click)="getAccessPN()">
+            Acessos
+          </ion-segment-button>
+          <ion-segment-button class="segmentFont" (click)="loadAll()" value="pie">
+            Cadastros
+          </ion-segment-button>
+       </ion-segment>
+
+      <ion-card-content>
+          <ion-list *ngIf="segment==='bar'">
+            <ion-item>
+              <canvas style="display: block" #barCanvas></canvas>  
+            </ion-item>          
+          </ion-list>
+          <ion-list *ngIf="segment==='pie'">
+              <ion-item>
+                <canvas style="display: block" #pieCanvas></canvas>
+              </ion-item>
+          </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+       Notícias do condomínio
+      </ion-card-header>
+      <ion-segment padding [(ngModel)]="list"  color="favorite">
+          <ion-segment-button class="segmentFont" color="favorite" value="v" (click)="getNews()">
+            Exibir
+          </ion-segment-button>
+          <ion-segment-button class="segmentFont" color="favorite" value="" (click)="getNews()">
+              Não exibir
+            </ion-segment-button>
+       </ion-segment>
+      <ion-card-content *ngIf="list=='v'">
+            <ion-card  *ngFor="let n of news" class="colorCard" padding>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="10.5">
+                      <ion-row>
+                          {{n.text}}
+                      </ion-row>
+                      <ion-row><hr/></ion-row>
+                      <ion-row>
+                          <b>Criada em: {{n.dateTime}}</b> 
+                      </ion-row>
+                      <ion-row>
+                          <b>Por: {{n.people.name}}</b>
+                      </ion-row>
+                  </ion-col>
+                  <ion-col *ngIf="rolesAuth=='ADMIN'" size="1.5">                    
+                    <ion-row>
+                        <ion-icon class="icon" name="create" color="favorite" (click)="loadNew(n);newsPage()"></ion-icon>
+                    </ion-row>   
+                    <ion-row><hr/></ion-row>   
+                    <ion-row>
+                        <ion-icon class="icon" name="trash" color="danger" (click)="deleteNews(n)"></ion-icon>
+                    </ion-row>              
+                  </ion-col>
+                </ion-row>
+            </ion-grid>
+            </ion-card>          
+      </ion-card-content>
+    </ion-card>
+    <ion-fab *ngIf="rolesAuth=='ADMIN'" vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="favorite" (click)="loadNew();newsPage()">
+          <ion-icon name="today"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+</ion-content>

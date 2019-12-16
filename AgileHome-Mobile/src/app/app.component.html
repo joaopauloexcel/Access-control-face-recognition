@@ -1,0 +1,27 @@
+<ion-app>
+  <ion-split-pane (click)="attUser()">
+    <ion-menu type="overlay">
+      <ion-header>
+        <ion-toolbar color="favorite">
+          <ion-title> <p class="fontMessage">Olá, <b>{{userEmail}}</b></p></ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list padding padding-top>
+          <ion-label><img src="/assets/logo.png" alt="" /></ion-label>
+        </ion-list>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+            <ion-item class="fontMenus" [routerDirection]="'root'" [routerLink]="[p.url]">
+              <ion-icon slot="start" [name]="p.icon"></ion-icon>
+              <ion-label>
+                {{p.title}}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

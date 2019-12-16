@@ -1,0 +1,57 @@
+<ion-header>
+    <ion-toolbar color="favorite">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        <p>Acessos</p>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content padding>
+      <ion-item>
+          <ion-input placeholder="Buscar cadastro..." type="text" [(ngModel)]="search" (keyup)="getAccess()"></ion-input>
+      </ion-item>
+    <ion-list *ngIf="roles!='RESIDENT'">
+      <ion-item *ngFor="let a of accesses"> 
+        <ion-icon name="key" slot="start"></ion-icon>
+        <ion-row *ngIf="a.status=='1'" class="colorLib">
+            <ion-col size="3.5" class="fontDesc">{{a.people.name}} </ion-col>
+            <ion-col size="3.5" class="fontDesc"> {{a.dateTime}}</ion-col>    
+            <ion-col size="3.5" class="fontDesc"> Liberado</ion-col>
+            <ion-col size="1.5" class="iconTrash">
+              <ion-label *ngIf="roles=='ADMIN'" color="danger">
+                <ion-icon (click)="deleteAccess(a)" name="trash" slot="start"></ion-icon>
+              </ion-label>
+              <ion-label *ngIf="roles!='ADMIN'" color="medium">
+                <ion-icon  name="trash" slot="start"></ion-icon>
+              </ion-label>
+            </ion-col>
+            <ion-col size="1"></ion-col>
+        </ion-row> 
+        <ion-row *ngIf="a.status=='0'" class="colorBloq">
+            <ion-col size="3.5" class="fontDesc">{{a.people.name}} </ion-col>
+            <ion-col size="3.5" class="fontDesc"> {{a.dateTime}}</ion-col>    
+            <ion-col size="3.5" class="fontDesc"> Bloqueado</ion-col>
+            <ion-col size="1.5" class="iconTrash">
+              <ion-label *ngIf="roles=='ADMIN'" color="danger">
+                <ion-icon (click)="deleteAccess(a.id)" name="trash" slot="start"></ion-icon>
+              </ion-label>
+              <ion-label *ngIf="roles!='ADMIN'" color="medium">
+                <ion-icon  name="trash" slot="start"></ion-icon>
+              </ion-label>
+            </ion-col>
+            <ion-col size="1"></ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-list>
+    <ion-card *ngIf="roles=='RESIDENT'">
+      Área Restrita!
+    </ion-card>
+    <!--
+      <div *ngIf="selectedItem" padding>
+        You navigated here from <b>{{selectedItem.title }}</b>
+      </div> {{cr.createdAt | date}}
+    -->
+  </ion-content>

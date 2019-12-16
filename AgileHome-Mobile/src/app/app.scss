@@ -1,0 +1,35 @@
+// App Styles
+// ----------------------------------------------------------------------------
+// Put style rules here that you want to apply to the entire application. These 
+// styles are for the entire app and not just one component. Additionally, this 
+// file can hold Sass mixins, functions, and placeholder classes to be imported 
+// and used throughout the application.
+:root {
+    --ion-color-favorite: #3367D7;
+    --ion-color-favorite-rgb: #3367D7;
+    --ion-color-favorite-contrast: #ffffff;
+    --ion-color-favorite-contrast-rgb: #3367D7;
+    --ion-color-favorite-shade: #3367D7;
+    --ion-color-favorite-tint:#3367D7;
+  }
+.ion-color-favorite {
+    --ion-color-base: var(--ion-color-favorite);
+    --ion-color-base-rgb: var(--ion-color-favorite-rgb);
+    --ion-color-contrast: var(--ion-color-favorite-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-favorite-contrast-rgb);
+    --ion-color-shade: var(--ion-color-favorite-shade);
+    --ion-color-tint: var(--ion-color-favorite-tint);
+  }
+p.fontMessage{
+  font-size: 2.4vh;
+  margin-top: 3vh;
+  margin-left: 3vh
+}
+img {
+  max-height: 10vh;
+  margin-top:10px;
+  overflow: hidden;
+}
+.fontMenus{
+  font-size: 2.4vh;;
+}

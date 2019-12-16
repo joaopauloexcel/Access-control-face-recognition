@@ -1,0 +1,40 @@
+.welcome-card ion-card {
+    max-height: 45vh;
+    max-width: 45vh;
+    margin-left: 5vh;
+    background: black;
+  }
+.cardAll{
+    top:0vh;
+    background: white;
+}
+.cardIndex{
+    top:18vh;
+}
+p{
+    text-align: center;
+}
+.error{
+    color: #ff0000;
+    font-size: 12px;
+  }
+.changeToast{
+       opacity: 0.6; 
+       border-radius: 5px !important; 
+       text-align: center; 
+       background: red;
+}
+.yourCssClassName {
+    text-align:center;
+   }
+.btnCenter{
+    margin-left: auto;
+    margin-right: auto;
+}
+img {
+    max-height: 45vh;
+    max-width: 30vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:2vh;
+  }
