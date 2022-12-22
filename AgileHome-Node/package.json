@@ -22,7 +22,7 @@
     "cors": "^2.8.5",
     "express": "^4.16.3",
     "html-pdf": "^2.2.0",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^9.0.0",
     "mysql2": "^1.6.1",
     "nodemailer": "^6.3.0",
     "sequelize": "^4.39.0",
